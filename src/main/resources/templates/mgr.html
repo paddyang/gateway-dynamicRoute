@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>这是管理界面</title>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" href="/css/element.css" />
+</head>
+<body>
+
+   <div id="app">
+
+       <el-button size="mini" type="primary" icon="plus" @click="btnToAdd" >新增</el-button>
+
+       <template>
+           <el-table :data="tableData" style="width: 100%">
+               <el-table-column type="index" width="50"></el-table-column>
+               <el-table-column prop="serviceId" label="编号" ></el-table-column>
+               <el-table-column prop="uri" label="地址" ></el-table-column>
+               <el-table-column prop="orderNum" label="排序" ></el-table-column>
+               <el-table-column prop="predicates" label="断言" ></el-table-column>
+               <el-table-column label="操作" width="300">
+                   <template scope="scope">
+                       <el-button   @click="btnToDetail(scope.$index, scope.row)" style="display: inline-block;" size="mini" type="info"  >详情</el-button>
+                       <el-button   @click="btnToEdit(scope.$index, scope.row)" style="display: inline-block;" size="mini"  >编辑</el-button>
+                       <el-button   @click="btnToDel(scope.$index, scope.row)" style="display: inline-block;" size="mini" type="danger"  >删除</el-button>
+                   </template>
+               </el-table-column>
+           </el-table>
+       </template>
+
+
+       <el-dialog title="路由新增/编辑" :visible.sync="dialogVisible">
+           <el-form :model="form">
+               <el-form-item v-show="false" prop="id" label="主键" :label-width="labelWidth">
+                   <el-input v-model.trim="form.id" auto-complete="off"></el-input>
+               </el-form-item>
+               <el-form-item prop="serviceId" label="编号" :label-width="labelWidth">
+                   <el-input v-model.trim="form.serviceId" auto-complete="off"></el-input>
+               </el-form-item>
+               <el-form-item prop="uri" label="路由地址" :label-width="labelWidth">
+                   <el-input v-model.trim="form.uri" auto-complete="off"></el-input>
+               </el-form-item>
+               <el-form-item prop="predicates" label="断言" :label-width="labelWidth">
+                   <el-input v-model.trim="form.predicates" auto-complete="off"></el-input>
+               </el-form-item>
+           </el-form>
+
+           <div slot="footer" class="dialog-footer">
+               <el-button @click="dialogVisible = false">取 消</el-button>
+               <el-button type="primary"  @click="save">确 定</el-button>
+           </div>
+       </el-dialog>
+
+
+   </div>
+
+</body>
+
+<script src="/js/vue.js"></script>
+<script src="/js/vue-resource.min.js"></script>
+<script src="/js/element.js"></script>
+<script src="/js/util.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data:{
+            labelWidth:"100px",
+            dialogVisible:false,
+            tableData:[],
+            form:{"filters":1,"predicates":"",order:1,"uri":""}
+        },
+        methods: {
+            init:function(){
+                var that = this;
+                that.form = {"filters":1,"predicates":"",order:1,"uri":""};
+                that.ajax.ajaxGet(that,'/route/routes',function(response){
+                    if(response.status==200){
+                        that.tableData = response.data;
+                    }
+                })
+
+            },
+            btnToDel:function(index,row){
+                var that = this;
+                that.$confirm("确定要删除嘛？QAQ", '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'danger'
+                }).then(() => {
+                    that.ajax.ajaxGet(that,'/route/delete/'+row.id,function(response){
+                        if(response.status==200){
+                            that.init();
+                        }
+                    })
+                }).catch(() => {
+                });
+            },
+            btnToDetail:function (index,row) {
+
+            },
+            btnToAdd:function(){
+                this.dialogVisible = true;
+            },
+            btnToEdit:function (index,row) {
+                this.form =JSON.parse(JSON.stringify(row));
+                this.dialogVisible = true;
+            },
+            save:function () {
+                var that = this;
+                console.log(JSON.parse(JSON.stringify(this.form)));
+                that.ajax.ajaxPost(that,'/route/add',JSON.parse(JSON.stringify(this.form)),function(response){
+                    if(response.status==200){
+                        that.dialogVisible = false;
+                        that.init();
+                    }
+                })
+            }
+        },
+        created: function () {
+            this.init();
+        },
+    });
+
+
+</script>
+
+</html>
