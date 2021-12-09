@@ -19,6 +19,7 @@ function POST(url,body){
         success: function (data) {
             if (data.status===200) {
                 alert("操作成功！");
+                window.location.href = "/html/index.html";
             }else {
                 alert(data.msg);
                 window.location.href = "/html/login.html";
@@ -40,6 +41,7 @@ function GET(url,body){
         success: function (data) {
             if (data.status===200) {
                 alert("操作成功！");
+                window.location.href = "/html/index.html";
             }else {
                 alert(data.msg);
                 window.location.href = "/html/login.html";

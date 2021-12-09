@@ -1,22 +1,15 @@
 package com.bz.gateway.dynamicroute.controller;
 
+import com.bz.gateway.dynamicroute.config.GatewayServiceHandler;
 import com.bz.gateway.dynamicroute.entity.GatewayRoute;
 import com.bz.gateway.dynamicroute.entity.dto.BaseResponse;
 import com.bz.gateway.dynamicroute.entity.dto.GatewayRouteDto;
 import com.bz.gateway.dynamicroute.service.GatewayRouteService;
-import com.bz.gateway.dynamicroute.config.GatewayServiceHandler;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/route")

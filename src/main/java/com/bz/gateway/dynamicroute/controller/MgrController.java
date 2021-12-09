@@ -2,7 +2,9 @@ package com.bz.gateway.dynamicroute.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.bz.gateway.dynamicroute.entity.dto.BaseResponse;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.WebSession;
 
 @RestController
@@ -23,5 +25,16 @@ public class MgrController {
         return BaseResponse.build(400, "用户名或者密码错误！");
     }
 
+    @GetMapping("/logout")
+    public BaseResponse logout(WebSession session){
+        session.invalidate();
+        return BaseResponse.success();
+    }
+
+
+    @RequestMapping("/expire")
+    public BaseResponse redirectTo(){
+        return BaseResponse.build(400,"登录过期");
+    }
 
 } 
