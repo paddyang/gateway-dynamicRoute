@@ -27,7 +27,7 @@ CREATE TABLE `gateway_route`  (
   `uri` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '转发地址',
   `predicates` json NOT NULL COMMENT '访问路径',
   `filters` json NOT NULL COMMENT '过滤',
-  `order_num` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '排序',
+  `order_num` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
   `creator_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_date` datetime NULL DEFAULT NULL,
   `update_id` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,

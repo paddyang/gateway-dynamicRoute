@@ -46,6 +46,7 @@ public class GatewayRouteService {
     public List<GatewayRoute> list() {
         QueryWrapper<GatewayRoute> wrapper = new QueryWrapper<>();
         wrapper.eq("del_flag",0);
+        wrapper.orderByAsc("order_num");
         return gatewayRouteMapper.selectList(wrapper);
     }
 
