@@ -1,38 +1,10 @@
-
 server:
   port: 8080
   servlet:
     context-path: /
 
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gateway?characterEncoding=utf8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: root
-
-  redis:
-    host: localhost
-    port: 6379
-    password:
-    database: 0
-
-  freemarker:
-    settings:
-      classic_compatible: true
-      datetime_format: yyyy-MM-dd HH:mm:ss
-      number_format: '#.##'
-      template_exception_handler: debug
-    suffix: .html
-    template-loader-path: classpath:/templates
-  mvc:
-    static-path-pattern: /static/**
-
-
-#management:
-#  security:
-#    enable: false
-#  endpoint:
-#    web:
-#      exposure:
-#        include: "*"
+  profiles:
+    active: local
+  application:
+    name: gatwway

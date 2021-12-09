@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GatewayRouteDto {
 
-    private Long id;
+    private Integer id;
 
     private String serviceId;
 
@@ -21,7 +21,7 @@ public class GatewayRouteDto {
 
     private String filters;
 
-    private String order;
+    private Integer orderNum;
 
     private String remarks;
 }

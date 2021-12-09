@@ -9,9 +9,7 @@ import com.bz.gateway.dynamicroute.entity.dto.GatewayRouteDto;
 import com.bz.gateway.dynamicroute.mapper.GatewayRouteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Service
 @RequiredArgsConstructor
@@ -37,8 +35,11 @@ public class GatewayRouteService {
     }
 
 
-    public Integer delete(String id) {
-        return gatewayRouteMapper.deleteById(Long.parseLong(id));
+    public Integer delete(Integer id) {
+        GatewayRoute route = new GatewayRoute();
+        route.setId(id);
+        route.setDelFlag("1");
+        return gatewayRouteMapper.updateById(route);
     }
 
 
@@ -46,5 +47,9 @@ public class GatewayRouteService {
         QueryWrapper<GatewayRoute> wrapper = new QueryWrapper<>();
         wrapper.eq("del_flag",0);
         return gatewayRouteMapper.selectList(wrapper);
+    }
+
+    public GatewayRoute getById(Integer id) {
+        return gatewayRouteMapper.selectById(id);
     }
 }

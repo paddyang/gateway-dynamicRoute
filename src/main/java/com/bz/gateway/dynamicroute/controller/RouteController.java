@@ -1,6 +1,7 @@
 package com.bz.gateway.dynamicroute.controller;
 
 import com.bz.gateway.dynamicroute.entity.GatewayRoute;
+import com.bz.gateway.dynamicroute.entity.dto.BaseResponse;
 import com.bz.gateway.dynamicroute.entity.dto.GatewayRouteDto;
 import com.bz.gateway.dynamicroute.service.GatewayRouteService;
 import com.bz.gateway.dynamicroute.config.GatewayServiceHandler;
@@ -25,9 +26,14 @@ public class RouteController {
     private final GatewayServiceHandler gatewayServiceHandler;
     private final GatewayRouteService gatewayRouteService;
 
-    @RequestMapping("/routes")
+    @RequestMapping("/redis/routes")
     public Flux<RouteDefinition> routes(){
         return gatewayServiceHandler.getRoute();
+    }
+
+    @RequestMapping("/routes")
+    public BaseResponse route(){
+        return BaseResponse.success(gatewayRouteService.list());
     }
 
     /**
@@ -35,38 +41,42 @@ public class RouteController {
      * @return
      */
     @GetMapping("/refresh")
-    public String refresh() {
-        return this.gatewayServiceHandler.loadRouteConfig();
+    public BaseResponse refresh() {
+        return BaseResponse.success(this.gatewayServiceHandler.loadRouteConfig());
     }
 
     /**
      * 增加路由记录
-     * @param gwdefinition
+     * @param gatewayRouteDto
      * @return
      */
     @PostMapping("/add")
-    public String add(@RequestBody GatewayRouteDto gatewayRouteDto) {
+    public BaseResponse add(@RequestBody GatewayRouteDto gatewayRouteDto) {
         gatewayRouteService.add(gatewayRouteDto);
         GatewayRoute gatewayRoute=new GatewayRoute();
         BeanUtils.copyProperties(gatewayRouteDto, gatewayRoute);
         gatewayServiceHandler.saveRoute(gatewayRoute);
-        return "success";
+        return BaseResponse.success();
     }
 
     @PostMapping("/update")
-    public String update(@RequestBody GatewayRouteDto gatewayRouteDto) {
+    public BaseResponse update(@RequestBody GatewayRouteDto gatewayRouteDto) {
         gatewayRouteService.update(gatewayRouteDto);
         GatewayRoute gatewayRoute=new GatewayRoute();
         BeanUtils.copyProperties(gatewayRouteDto, gatewayRoute);
         gatewayServiceHandler.update(gatewayRoute);
-        return "success";
+        return BaseResponse.success();
     }
 
     @GetMapping("/delete")
-    public String delete(@PathVariable String id) {
-        gatewayRouteService.delete(id);
+    public BaseResponse delete(String id) {
+        gatewayRouteService.delete(Integer.parseInt(id));
         gatewayServiceHandler.deleteRoute(id);
-        return "success";
+        return BaseResponse.success();
     }
 
+    @GetMapping("/getById")
+    public BaseResponse getById(Integer id){
+        return BaseResponse.success(gatewayRouteService.getById(id));
+    }
 }

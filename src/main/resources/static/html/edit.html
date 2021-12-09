@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><style type="text/css" id="19762177980"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>编辑路由</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href="/css/home.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+	<link rel="shortcut icon" href="favicon.ico">
+    <script src="/js/common.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <div id="nav">
+        <script>
+            $("#nav").load("/html/nav.html");
+        </script>
+    </div>
+<!---->
+<div id="wrapper wrapper-content" style="padding: 25px;">
+    <form target="_blank">
+        <div class="form-group">
+            <label for="post-title">编辑路由</label>
+            <input type="hidden" id="id" name="id" class="form-control" placeholder=""><br>
+            <input type="text" id="serviceId" name="serviceId" class="form-control" placeholder="服务名称"><br>
+            <input type="text" id="uri" name="codeNum" class="form-control" placeholder="转发地址"><br>
+            <input type="text" id="predicates" name="predicates" class="form-control" placeholder="访问路径（json）"><br>
+            <input type="text" id="filters" name="filters" class="form-control" placeholder="过滤（json）"><br>
+            <input type="text" id="orderNum" name="orderNum" class="form-control" placeholder="排序"><br>
+            <input type="text" id="remarks" name="remarks" class="form-control" placeholder="备注"><br>
+        </div>
+		<button onclick="edit()" type="button"  class="btn btn-default">确认修改</button>
+    </form>
+</div>
+<!----><!---->
+        </div>
+    <script>
+        getById();
+
+        function edit() {
+            let id = $("#id").val();
+            let serviceId = $("#serviceId").val();
+            let uri = $("#uri").val();
+            let predicates = $("#predicates").val();
+            let filters = $("#filters").val();
+            let orderNum = $("#orderNum").val();
+            let remarks = $("#remarks").val();
+            let body = {
+                'id': id,
+                'serviceId': serviceId,
+                'uri': uri,
+                'predicates': predicates,
+                'filters': filters,
+                'orderNum': orderNum,
+                'remarks': remarks
+            };
+            POST("/route/update", body);
+            window.location.href = "/html/index.html";
+        }
+
+        function getById() {
+            var id = getQueryVariable("id");
+            $.get("/route/getById",{'id':id},function (data) {
+                if(data.status==200){
+                    var item = data.data;
+                    $("#id").val(item.id);
+                    $("#serviceId").val(item.serviceId);
+                    $("#uri").val(item.uri);
+                    $("#predicates").val(item.predicates);
+                    $("#filters").val(item.filters);
+                    $("#orderNum").val(item.orderNum);
+                    $("#remarks").val(item.remarks);
+                }
+            },'json');
+        }
+    </script>
+</body></html>

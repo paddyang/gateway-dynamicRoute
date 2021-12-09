@@ -1,0 +1,22 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.26.13.153:3306/ws?serverTimezone=GMT%2B8&characterEncoding=UTF-8&useSSL=false
+    username: ws
+    password: Aa@#5320
+  redis:
+    host: 172.26.13.153
+    port: 6379
+    password:
+    database: 1
+
+
+
+#management:
+#  security:
+#    enable: false
+#  endpoint:
+#    web:
+#      exposure:
+#        include: "*"
