@@ -22,6 +22,7 @@ public class GatewayRouteService {
         BeanUtils.copyProperties(gatewayRouteDto, gatewayRoute);
         gatewayRoute.setCreateDate(new Date());
         gatewayRoute.setCreatorId("");
+        gatewayRoute.setDelFlag("0");
         return gatewayRouteMapper.insert(gatewayRoute);
     }
 
