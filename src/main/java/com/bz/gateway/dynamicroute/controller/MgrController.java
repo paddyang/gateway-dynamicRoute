@@ -34,7 +34,7 @@ public class MgrController {
 
     @RequestMapping("/expire")
     public BaseResponse redirectTo(){
-        return BaseResponse.build(400,"登录过期");
+        return BaseResponse.build(401,"登录过期");
     }
 
 } 

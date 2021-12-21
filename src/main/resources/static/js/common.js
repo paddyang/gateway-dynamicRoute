@@ -20,9 +20,11 @@ function POST(url,body){
             if (data.status===200) {
                 alert("操作成功！");
                 window.location.href = "/html/index.html";
-            }else {
+            }else if(data.status===401){
                 alert(data.msg);
-                window.location.href = "/html/login.html";
+                window.location.href = "/html/login.html";}
+            else {
+                alert(data.msg);
             }
         },
         error: function (data){
@@ -42,9 +44,11 @@ function GET(url,body){
             if (data.status===200) {
                 alert("操作成功！");
                 window.location.href = "/html/index.html";
-            }else {
+            }else if(data.status===401){
                 alert(data.msg);
                 window.location.href = "/html/login.html";
+            } else {
+                alert(data.msg);
             }
         },
         error: function (data){
